@@ -7,8 +7,6 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthState
    + Sistema de reservas automático y animaciones
    ========================================================= */
 
-
-
   /* =======================================================
      1. CONFIGURACIÓN DE GROQ API
      ======================================================= */
