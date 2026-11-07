@@ -7,6 +7,8 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthState
    + Sistema de reservas automático y animaciones
    ========================================================= */
 
+
+
   /* =======================================================
      1. CONFIGURACIÓN DE GROQ API
      ======================================================= */
@@ -1067,6 +1069,38 @@ PROMOCIONES (menciónalas SOLO si el usuario pregunta por promociones):
   /* =======================================================
      18. INICIALIZACIÓN
      ======================================================= */
+  // Registra al usuario en la base (users/{uid}) apenas inicia sesión o se registra,
+  // sin importar cómo entró (correo, registro o Google). Así el perfil existe
+  // desde el primer momento y no solo cuando guarda un chat.
+  async function ensureUserProfile(user) {
+    try {
+      const ref = doc(db, 'users', user.uid);
+
+      // 1) Al instante: crea el documento (o solo actualiza la fecha si ya existía)
+      await setDoc(ref, {
+        email: user.email || '',
+        ultimaActualizacion: serverTimestamp()
+      }, { merge: true });
+
+      // 2) Poco después: si todavía no tiene nombre, se lo pone. Se espera un instante
+      //    para no pisar el nombre que el formulario de registro guarda por su cuenta.
+      setTimeout(async () => {
+        try {
+          if (!auth.currentUser || auth.currentUser.uid !== user.uid) return;
+          const snap = await getDoc(ref);
+          if (!snap.exists() || !snap.data().nombre) {
+            const fallback = user.displayName || (user.email || '').split('@')[0];
+            await setDoc(ref, { nombre: fallback }, { merge: true });
+          }
+        } catch (e) {
+          console.warn('No se pudo completar el perfil del usuario', e);
+        }
+      }, 1200);
+    } catch (e) {
+      console.warn('No se pudo registrar el perfil del usuario', e);
+    }
+  }
+
   // Borra TODO lo que pertenece a la sesión actual (memoria + pantalla)
   function resetSession() {
     sessionGen++;
@@ -1138,6 +1172,9 @@ PROMOCIONES (menciónalas SOLO si el usuario pregunta por promociones):
       resetSession();
       if (authModal) authModal.classList.remove('visible');
       sessionStorage.removeItem('pousito_invitado'); 
+
+      // Registra/actualiza al usuario en la base de datos de inmediato
+      ensureUserProfile(user);
 
       const gen = sessionGen;
       setTimeout(() => {
