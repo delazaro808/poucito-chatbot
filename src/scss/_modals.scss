@@ -1,0 +1,388 @@
+// =========================================================
+// POUSITO CAFÉ — MODALES (CALIFICACIÓN, RESERVA, AUTH, PERFIL)
+// =========================================================
+
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(46, 27, 18, 0.5);
+  @include flex-center;
+  z-index: 100;
+  padding: 20px;
+
+  &.visible {
+    display: flex;
+  }
+
+  @include respond-to('mobile') {
+    padding: 12px;
+  }
+
+  .modal {
+    position: relative;
+    background: $white;
+    border-radius: $radius-lg;
+    padding: 32px;
+    width: 90%;
+    max-width: 340px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(46, 27, 18, 0.25);
+    animation: popIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-height: 90vh;
+    overflow-y: auto;
+
+    &.modal-reservation {
+      max-width: 480px;
+    }
+
+    &.modal-auth {
+      max-width: 420px;
+      padding: 32px;
+
+      @include respond-to('tablet-sm') {
+        padding: 24px 20px;
+      }
+
+      @include respond-to('mobile') {
+        padding: 22px 16px;
+      }
+    }
+
+    &.modal-profile {
+      max-width: 300px;
+      padding: 24px;
+      text-align: center;
+
+      @include respond-to('tablet-sm') {
+        padding: 22px 18px;
+      }
+    }
+
+    h3 {
+      font-family: $font-display;
+      margin: 0 0 6px;
+      font-size: 19px;
+      color: $text-dark;
+    }
+
+    .modal-subtitle {
+      font-size: 13px;
+      color: $text-muted;
+      margin: 0 0 20px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      color: $text-muted;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      @include flex-center;
+      transition: background 0.15s ease, transform 0.15s ease;
+
+      &:hover {
+        background: $cream;
+        transform: rotate(90deg);
+      }
+    }
+
+    // Calificación por estrellas
+    .stars {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      font-size: 32px;
+      margin-bottom: 22px;
+
+      .star {
+        color: $cream-dark;
+        cursor: pointer;
+        transition: color 0.15s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        &:hover {
+          transform: scale(1.2);
+        }
+
+        &.selected {
+          color: $primary-color;
+          transform: scale(1.1);
+        }
+      }
+
+      @include respond-to('mobile') {
+        font-size: 28px;
+        gap: 6px;
+      }
+    }
+
+    // Botón de envío
+    .submit-rating-btn {
+      width: 100%;
+      padding: 12px;
+      background: $primary-color;
+      color: $white;
+      border-radius: $radius-md;
+      font-size: 14px;
+      font-weight: 600;
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        background: $secondary-color;
+        box-shadow: 0 6px 20px rgba(46, 27, 18, 0.25);
+        transform: translateY(-1px);
+      }
+
+      &:active {
+        transform: scale(0.97);
+      }
+    }
+
+    .rating-thanks {
+      display: none;
+      margin: 14px 0 0;
+      font-size: 13.5px;
+      color: $secondary-color;
+      font-weight: 600;
+
+      &.visible {
+        display: block;
+        animation: fadeSlide 0.3s ease;
+      }
+    }
+
+    // Grid de paquetes
+    .package-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 8px;
+
+      .package-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        padding: 16px 10px;
+        background: $cream;
+        border: 2px solid $cream-dark;
+        border-radius: $radius-md;
+        transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        text-align: center;
+
+        &:hover {
+          border-color: $primary-color;
+          transform: translateY(-3px) scale(1.03);
+          box-shadow: 0 8px 20px rgba(217, 121, 61, 0.25);
+        }
+
+        &.selected {
+          background: $primary-color;
+          border-color: $primary-color;
+
+          .package-icon,
+          .package-name,
+          .package-price {
+            color: $white;
+          }
+
+          .package-icon svg {
+            stroke: $white;
+          }
+        }
+
+        .package-icon {
+          font-size: 24px;
+          line-height: 1;
+          color: $secondary-color;
+          @include flex-center;
+          margin-bottom: 4px;
+          transition: color 0.2s ease;
+
+          svg {
+            display: block;
+          }
+        }
+
+        .package-name {
+          font-size: 13px;
+          font-weight: 600;
+          color: $text-dark;
+        }
+
+        .package-price {
+          font-size: 12px;
+          color: $secondary-color;
+          font-weight: 500;
+        }
+      }
+
+      @include respond-to('tablet-sm') {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    // Formulario de reserva
+    .reservation-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: left;
+
+      label {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: $secondary-color;
+      }
+
+      input {
+        padding: 10px 12px;
+        border: 1.5px solid $cream-dark;
+        border-radius: $radius-sm;
+        font-size: 14px;
+        font-family: inherit;
+        background: $cream;
+        outline: none;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        color: $text-dark;
+
+        &:focus {
+          border-color: $primary-color;
+          box-shadow: 0 0 0 3px rgba(217, 121, 61, 0.15);
+        }
+
+        @include respond-to('tablet-sm') {
+          font-size: 16px;
+        }
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+
+        @include respond-to('mobile') {
+          grid-template-columns: 1fr;
+        }
+      }
+    }
+
+    // Confirmación exitosa de reserva
+    .success-check {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(76, 175, 80, 0.15);
+      color: $success-color;
+      @include flex-center;
+      margin: 0 auto 14px;
+      animation: popCheck 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .reservation-code {
+      font-family: $font-display;
+      font-size: 22px;
+      letter-spacing: 2px;
+      color: $primary-color;
+      background: $cream;
+      padding: 12px 16px;
+      border-radius: $radius-md;
+      border: 2px dashed $primary-color;
+      margin: 4px 0;
+      font-weight: 700;
+    }
+
+    // Autenticación (Google, inputs, divider)
+    .btn-google {
+      width: 100%;
+      padding: 12px;
+      border-radius: 50px;
+      border: 1.5px solid $cream-dark;
+      background: $white;
+      color: $text-dark;
+      @include flex-center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      cursor: pointer;
+
+      &:hover {
+        background: $cream;
+        border-color: $secondary-light;
+        transform: translateY(-1px);
+      }
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      color: $text-muted;
+      font-size: 12px;
+      font-weight: 600;
+
+      .auth-line {
+        flex: 1;
+        height: 1px;
+        background: $cream-dark;
+      }
+
+      span {
+        padding: 0 12px;
+      }
+    }
+
+    .auth-input {
+      padding: 14px 18px;
+      border-radius: 50px;
+      border: 1.5px solid $cream-dark;
+      background: $cream;
+      color: $text-dark;
+      outline: none;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.15s ease;
+
+      &:focus {
+        border-color: $primary-color;
+      }
+
+      @include respond-to('tablet-sm') {
+        font-size: 16px;
+      }
+    }
+
+    .btn-register-link {
+      background: transparent;
+      border: none;
+      color: $secondary-light;
+      font-size: 13px;
+      margin-top: 10px;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+
+    @include respond-to('tablet-sm') {
+      padding: 24px 20px;
+    }
+
+    @include respond-to('mobile') {
+      padding: 22px 16px;
+    }
+  }
+}
+

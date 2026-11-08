@@ -1,0 +1,335 @@
+// =========================================================
+// POUSITO CAFÉ — MODO OSCURO (SCSS)
+// =========================================================
+
+@use 'variables' as *;
+
+body {
+  transition: background 0.3s ease, color 0.3s ease;
+
+  &.dark-mode {
+    --dark: #{$dark-bg};
+    --brown: #{$dark-surface-alt};
+    --brown-light: #{$secondary-color};
+    --orange: #{$primary-color};
+    --orange-light: #{$primary-light};
+    --cream: #{$dark-chat-bg};
+    --cream-dark: #2A1A0F;
+    --white: #{$dark-surface};
+    --text-dark: #{$dark-text};
+    --text-muted: #{$dark-text-muted};
+    --user-bubble: #{$dark-user-bubble};
+    --bot-bubble: #{$dark-bot-bubble};
+    --shadow: #{$shadow-dark};
+    --shadow-lg: #{$shadow-dark-lg};
+
+    .sidebar {
+      background: $dark-sidebar;
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
+
+      .brand-text h1 {
+        color: $cream;
+      }
+    }
+
+    .chat-panel,
+    .chat-container {
+      background: $dark-chat-bg;
+
+      .top-bar {
+        background: $dark-chat-bg;
+
+        .model-selector {
+          background: $dark-sidebar;
+
+          .model-pill.active {
+            background: $dark-chat-bg;
+            color: $dark-text;
+          }
+        }
+
+        .icon-circle-btn {
+          background: $dark-surface;
+          color: $primary-light;
+          border: 1px solid #2A1A0F;
+
+          &:hover {
+            background: $primary-color;
+            color: $white;
+          }
+        }
+      }
+
+      .welcome-screen {
+        .welcome-hero {
+          .welcome-title {
+            color: $dark-text;
+          }
+
+          .welcome-subtitle {
+            color: $primary-light;
+          }
+
+          .welcome-card {
+            background: $dark-surface;
+            border: 1px solid #2A1A0F;
+
+            .welcome-avatar {
+              background: #2A1A0F;
+            }
+
+            .welcome-msg {
+              h2 { color: $dark-text; }
+              p  { color: $dark-text-muted; }
+            }
+          }
+        }
+
+        .welcome-cards {
+          .welcome-card-item {
+            &.card-cream { background: #3A2718; }
+            &.card-green { background: #2B3320; }
+            &.card-pink  { background: #3A2018; }
+
+            h3 { color: $dark-text; }
+            p  { color: $dark-text-muted; }
+          }
+        }
+      }
+
+      .chat-view {
+        .chat-header {
+          background: $dark-surface;
+          border-bottom-color: #2A1A0F;
+
+          .bot-info h2 {
+            color: $dark-text;
+          }
+        }
+
+        .messages,
+        .message-list {
+          .message-row {
+            &.bot,
+            &.assistant {
+              .bubble,
+              .message-bubble {
+                background: $dark-bot-bubble;
+                color: $dark-text;
+                border: 1px solid #2A1A0F;
+              }
+
+              .chat-package-btn {
+                background: $dark-chat-bg;
+                border-color: #2A1A0F;
+                color: $primary-light;
+
+                .chat-package-header svg {
+                  color: $primary-light;
+                }
+
+                small {
+                  color: $dark-text-muted;
+                }
+
+                &:hover {
+                  background: $primary-color;
+                  color: $white;
+                  border-color: $primary-color;
+
+                  .chat-package-header svg {
+                    color: $white;
+                  }
+
+                  small {
+                    color: rgba(255, 255, 255, 0.85);
+                  }
+                }
+              }
+            }
+
+            &.user {
+              .bubble,
+              .message-bubble {
+                background: $dark-user-bubble;
+                color: #FFFFFF;
+              }
+            }
+          }
+        }
+
+        .quick-actions {
+          .quick-btn {
+            background: $dark-surface;
+            border-color: #2A1A0F;
+            color: $primary-light;
+
+            &:hover {
+              background: $primary-color;
+              color: #FFFFFF;
+              border-color: $primary-color;
+            }
+          }
+        }
+
+        .composer {
+          .composer-input {
+            background: $dark-surface;
+            border-color: #2A1A0F;
+            color: $dark-text;
+
+            &::placeholder {
+              color: $dark-text-muted;
+            }
+          }
+        }
+      }
+    }
+
+    .gallery-panel {
+      background: $dark-surface;
+      border-left-color: #2A1A0F;
+
+      .carousel {
+        background: #2A1A0F;
+
+        .carousel-slide figcaption {
+          background: $dark-surface;
+          color: $dark-text;
+        }
+
+        .carousel-dots {
+          background: $dark-surface;
+
+          .dot {
+            background: #2A1A0F;
+
+            &.active {
+              background: $primary-color;
+            }
+          }
+        }
+      }
+    }
+
+    .modal-overlay {
+      .modal {
+        background: $dark-surface;
+        border: 1px solid #2A1A0F;
+
+        h3 {
+          color: $dark-text;
+        }
+
+        .modal-close:hover {
+          background: #2A1A0F;
+        }
+
+        .package-card {
+          background: $dark-chat-bg;
+          border-color: #2A1A0F;
+
+          &:hover {
+            border-color: $primary-color;
+          }
+
+          .package-icon {
+            color: $primary-light;
+          }
+
+          .package-name {
+            color: $dark-text;
+          }
+
+          .package-price {
+            color: $dark-text-muted;
+          }
+
+          &.selected {
+            background: $primary-color;
+            border-color: $primary-color;
+
+            .package-icon,
+            .package-name,
+            .package-price {
+              color: $white;
+            }
+          }
+        }
+
+        .reservation-form {
+          label {
+            color: $primary-light;
+          }
+
+          input {
+            background: $dark-chat-bg;
+            border-color: #2A1A0F;
+            color: $dark-text;
+
+            &:focus {
+              border-color: $primary-color;
+            }
+          }
+        }
+
+        .reservation-code {
+          background: $dark-chat-bg;
+          color: $primary-light;
+        }
+
+        .btn-google {
+          background: #2A1A0F;
+          border-color: rgba(255, 255, 255, 0.1);
+          color: $dark-text;
+
+          &:hover {
+            background: $dark-surface-alt;
+          }
+        }
+
+        .auth-input {
+          background: #2A1A0F;
+          border-color: rgba(255, 255, 255, 0.1);
+          color: $dark-text;
+
+          &::placeholder {
+            color: $dark-text-muted;
+          }
+        }
+      }
+    }
+
+    .messages::-webkit-scrollbar-thumb,
+    .message-list::-webkit-scrollbar-thumb,
+    .gallery-panel::-webkit-scrollbar-thumb,
+    .welcome-screen::-webkit-scrollbar-thumb {
+      background: #2A1A0F;
+    }
+  }
+}
+
+// Transiciones suaves
+.sidebar,
+.chat-panel,
+.chat-container,
+.gallery-panel,
+.chat-header,
+.bubble,
+.message-bubble,
+.composer-input,
+.quick-btn,
+.modal,
+.welcome-card,
+.welcome-card-item,
+.icon-circle-btn,
+.model-pill,
+.carousel,
+.carousel-slide figcaption,
+.carousel-dots,
+.model-selector,
+.package-card,
+.chat-package-btn {
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+

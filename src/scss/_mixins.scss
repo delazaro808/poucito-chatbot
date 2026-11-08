@@ -1,0 +1,72 @@
+// =========================================================
+// POUSITO CAFÉ — MIXINS SCSS
+// =========================================================
+
+@use 'sass:map';
+
+// Mixins para Media Queries Responsivas
+$breakpoints: (
+  'mobile-xs': 360px,
+  'mobile': 480px,
+  'tablet-sm': 720px,
+  'tablet': 1024px,
+  'laptop': 1280px,
+  'desktop-lg': 1600px
+);
+
+@mixin respond-to($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (max-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @media (max-width: $breakpoint) {
+      @content;
+    }
+  }
+}
+
+@mixin respond-from($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @media (min-width: $breakpoint) {
+      @content;
+    }
+  }
+}
+
+@mixin respond-height($max-height) {
+  @media (max-height: $max-height) {
+    @content;
+  }
+}
+
+// Mixins utilitarios
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+@mixin custom-scrollbar($width: 6px, $thumb-color: #EFE3D3, $radius: 4px) {
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: $radius;
+  }
+}

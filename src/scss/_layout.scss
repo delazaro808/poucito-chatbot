@@ -1,0 +1,448 @@
+// =========================================================
+// POUSITO CAFÉ — LAYOUT, SIDEBAR Y GALERÍA
+// =========================================================
+
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.app {
+  display: flex;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+// =========================================================
+// OVERLAY & MENU TOGGLE
+// =========================================================
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 30;
+
+  &.visible {
+    display: block;
+  }
+}
+
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 14px;
+  left: 14px;
+  z-index: 50;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: $dark-color;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  span {
+    width: 20px;
+    height: 2px;
+    background: $cream;
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  &.active {
+    span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    span:nth-child(2) { opacity: 0; }
+    span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+  }
+
+  @include respond-to('tablet-sm') {
+    display: flex;
+    top: calc(14px + env(safe-area-inset-top, 0px));
+    left: 14px;
+  }
+}
+
+// =========================================================
+// SIDEBAR (PANEL LATERAL)
+// =========================================================
+
+.sidebar {
+  width: 19%;
+  min-width: 240px;
+  background: $dark-color;
+  color: $cream;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 18px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  gap: 20px;
+
+  .sidebar-top,
+  .sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 8px;
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: $cream-dark;
+      @include flex-center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+    }
+
+    .brand-text {
+      min-width: 0;
+
+      h1 {
+        font-family: $font-display;
+        font-size: 18px;
+        margin: 0;
+        line-height: 1.2;
+      }
+
+      p {
+        margin: 2px 0 0;
+        font-size: 12px;
+        color: $primary-light;
+      }
+    }
+  }
+
+  .new-chat-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px;
+    background: $primary-color;
+    color: $white;
+    border-radius: $radius-md;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      background: $primary-light;
+      box-shadow: 0 6px 20px rgba(217, 121, 61, 0.4);
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+
+  .history {
+    .history-title {
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: $text-muted;
+      margin: 0 0 10px 4px;
+      font-weight: 600;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .history-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        text-align: left;
+        padding: 10px 12px;
+        border-radius: $radius-sm;
+        color: $cream;
+        font-size: 13.5px;
+        transition: background 0.15s ease, transform 0.1s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.06);
+          transform: translateX(2px);
+        }
+
+        &.active {
+          background: rgba(217, 121, 61, 0.18);
+          color: $primary-light;
+
+          .history-icon {
+            color: $primary-light;
+          }
+        }
+
+        .history-icon {
+          flex-shrink: 0;
+          color: $text-muted;
+        }
+      }
+    }
+  }
+
+  .sidebar-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 18px;
+
+    .rate-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      text-align: left;
+      padding: 10px 12px;
+      border-radius: $radius-sm;
+      color: $cream;
+      font-size: 13.5px;
+      transition: background 0.15s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      svg {
+        color: $primary-light;
+      }
+    }
+
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      .social-link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: $text-muted;
+        padding: 6px 12px;
+        border-radius: $radius-sm;
+        transition: color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+
+        svg {
+          color: $text-muted;
+          flex-shrink: 0;
+          transition: color 0.15s ease;
+        }
+
+        &:hover {
+          color: $primary-light;
+          background: rgba(255, 255, 255, 0.05);
+          transform: translateX(2px);
+
+          svg {
+            color: $primary-light;
+          }
+        }
+      }
+    }
+
+    .contact-info {
+      font-size: 12px;
+      color: $text-muted;
+      padding: 0 12px;
+      line-height: 1.7;
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+
+  // Reglas Responsivas
+  @include respond-to('laptop') {
+    width: 220px;
+    min-width: 220px;
+  }
+
+  @include respond-to('tablet') {
+    width: 240px;
+    min-width: 240px;
+  }
+
+  @include respond-to('tablet-sm') {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 82%;
+    min-width: 0;
+    max-width: 300px;
+    z-index: 40;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    padding: calc(14px + env(safe-area-inset-top, 0px)) 18px calc(18px + env(safe-area-inset-bottom, 0px));
+
+    &.open {
+      transform: translateX(0);
+    }
+
+    .brand {
+      padding-left: 52px;
+      padding-bottom: 0;
+      min-height: 40px;
+
+      .brand-icon {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .sidebar-top {
+      gap: 16px;
+    }
+
+    .sidebar-bottom {
+      gap: 12px;
+      padding-top: 14px;
+    }
+  }
+
+  @include respond-from('desktop-lg') {
+    width: 280px;
+  }
+}
+
+// =========================================================
+// PANEL DERECHO — GALERÍA Y CARRUSELES
+// =========================================================
+
+.gallery-panel {
+  width: 23%;
+  min-width: 220px;
+  background: $white;
+  border-left: 1px solid $cream-dark;
+  padding: 22px 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  flex-shrink: 0;
+
+  .carousel-title {
+    font-family: $font-display;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: $secondary-color;
+    margin: 0 0 12px;
+  }
+
+  .carousel {
+    position: relative;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    background: $cream;
+    box-shadow: $shadow;
+
+    .carousel-track {
+      display: flex;
+      transition: none;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      margin: 0;
+      display: none;
+
+      &.active {
+        display: block;
+        animation: carouselFade 0.4s ease;
+      }
+
+      .carousel-img {
+        height: 140px;
+        background-size: cover;
+        background-position: center;
+        background-color: $cream-dark;
+      }
+
+      figcaption {
+        padding: 10px 14px;
+        font-size: 12.5px;
+        color: $text-dark;
+        background: $white;
+        text-align: center;
+      }
+    }
+
+    .carousel-arrow {
+      position: absolute;
+      top: 55px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(46, 27, 18, 0.55);
+      color: $white;
+      font-size: 16px;
+      @include flex-center;
+      transition: background 0.15s ease, transform 0.15s ease;
+
+      &:hover {
+        background: rgba(46, 27, 18, 0.85);
+        transform: scale(1.1);
+      }
+
+      &.prev { left: 8px; }
+      &.next { right: 8px; }
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 0;
+      background: $white;
+
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: $cream-dark;
+        transition: background 0.15s ease, transform 0.15s ease;
+        cursor: pointer;
+
+        &.active {
+          background: $primary-color;
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+
+  @include respond-to('laptop') {
+    width: 240px;
+    min-width: 240px;
+  }
+
+  @include respond-to('tablet') {
+    display: none;
+  }
+
+  @include respond-from('desktop-lg') {
+    width: 320px;
+  }
+}
+

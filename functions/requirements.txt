@@ -1,0 +1,4 @@
+# Dependencias para la Cloud Function de Pousito Café (Python 3.12)
+firebase-functions>=0.1.0
+requests>=2.32.0
+

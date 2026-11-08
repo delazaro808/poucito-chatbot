@@ -23,3 +23,16 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Variables de entorno sensibles (nunca subir)
+.env.local
+.env.*.local
+functions/.env.local
+functions/.env.*.local
+
+# Python (functions)
+functions/__pycache__/
+functions/**/*.pyc
+functions/.venv/
+functions/venv/
+functions/.python-version

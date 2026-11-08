@@ -12,5 +12,19 @@
         "destination": "/index.html"
       }
     ]
-  }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "runtime": "python312",
+      "ignore": [
+        "venv",
+        ".venv",
+        "**/__pycache__",
+        "**/*.pyc",
+        ".env.local"
+      ]
+    }
+  ]
 }

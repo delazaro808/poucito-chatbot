@@ -1,0 +1,62 @@
+// =========================================================
+// POUSITO CAFÉ — VARIABLES GLOBALES SCSS
+// =========================================================
+
+// Colores Primarios y Secundarios
+$primary-color: #D9793D;
+$primary-light: #F0A66B;
+$secondary-color: #6F432C;
+$secondary-light: #8A5A3B;
+$dark-color: #2E1B12;
+
+// Fondos y Paleta Neutra
+$chat-bg: #F7F0E8;
+$cream: #F7F0E8;
+$cream-dark: #EFE3D3;
+$white: #FFFFFF;
+
+// Colores de Texto
+$text-dark: #2E1B12;
+$text-muted: #8A7566;
+
+// Burbujas de Chat
+$user-bubble: #D9793D;
+$bot-bubble: #FFFFFF;
+
+// Estados y Acentos
+$success-color: #4CAF50;
+$danger-color: #e53935;
+$warning-color: #FBBC05;
+
+// Tarjetas de Bienvenida
+$card-cream-bg: #F3E4CE;
+$card-green-bg: #E2E8D5;
+$card-pink-bg: #F3DDD3;
+
+// Sombras
+$shadow: 0 4px 16px rgba(46, 27, 18, 0.08);
+$shadow-lg: 0 12px 40px rgba(46, 27, 18, 0.12);
+$shadow-dark: 0 4px 16px rgba(0, 0, 0, 0.35);
+$shadow-dark-lg: 0 12px 40px rgba(0, 0, 0, 0.45);
+
+// Radios de Borde
+$radius-lg: 20px;
+$radius-md: 14px;
+$radius-sm: 8px;
+$radius-full: 999px;
+
+// Tipografías
+$font-display: Georgia, 'Iowan Old Style', 'Palatino Linotype', serif;
+$font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+// Variables Modo Oscuro
+$dark-bg: #0F0906;
+$dark-sidebar: #0A0604;
+$dark-surface: #22150C;
+$dark-surface-alt: #2A1A0F;
+$dark-chat-bg: #1A1008;
+$dark-text: #F7F0E8;
+$dark-text-muted: #A89182;
+$dark-bot-bubble: #2A1A0F;
+$dark-user-bubble: #D9793D;
+

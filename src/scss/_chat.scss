@@ -1,0 +1,787 @@
+// =========================================================
+// POUSITO CAFÉ — COMPONENTES DEL CHAT (SCSS NESTED)
+// =========================================================
+
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.chat-panel,
+.chat-container {
+  flex: 1 1 0;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  background: $chat-bg;
+  min-width: 0;
+  position: relative;
+
+  @include respond-to('tablet-sm') {
+    width: 100%;
+  }
+
+  // ===== BARRA SUPERIOR =====
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    background: $chat-bg;
+    flex-shrink: 0;
+
+    .model-selector {
+      display: flex;
+      align-items: center;
+      background: $dark-color;
+      border-radius: $radius-full;
+      padding: 4px;
+      gap: 2px;
+
+      .model-pill {
+        padding: 8px 20px;
+        border-radius: $radius-full;
+        font-size: 13.5px;
+        font-weight: 500;
+        color: $cream;
+        transition: all 0.2s ease;
+
+        &:hover {
+          color: $primary-light;
+        }
+
+        &.active {
+          background: $cream;
+          color: $dark-color;
+          font-weight: 600;
+        }
+
+        @include respond-to('tablet-sm') {
+          padding: 7px 14px;
+          font-size: 12.5px;
+        }
+
+        @include respond-to('mobile') {
+          padding: 6px 12px;
+          font-size: 12px;
+        }
+
+        @include respond-to('mobile-xs') {
+          padding: 6px 10px;
+          font-size: 11.5px;
+        }
+      }
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+
+      .icon-circle-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: $white;
+        color: $primary-color;
+        @include flex-center;
+        box-shadow: $shadow;
+        transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.15s ease, color 0.15s ease;
+
+        &:hover {
+          transform: translateY(-2px) scale(1.05);
+          background: $primary-color;
+          color: $white;
+        }
+
+        @include respond-to('tablet-sm') {
+          width: 36px;
+          height: 36px;
+        }
+      }
+
+      @include respond-to('tablet-sm') {
+        gap: 8px;
+      }
+    }
+
+    @include respond-to('tablet-sm') {
+      padding: 14px 16px;
+      padding-left: 66px;
+      padding-top: calc(14px + env(safe-area-inset-top, 0px));
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    @include respond-to('mobile-xs') {
+      gap: 8px;
+    }
+  }
+
+  // ===== PANTALLA DE BIENVENIDA =====
+  .welcome-screen {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 40px;
+    scroll-behavior: smooth;
+
+    &.hidden {
+      display: none;
+    }
+
+    .welcome-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-top: 10px;
+
+      .welcome-logo {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        overflow: hidden;
+        box-shadow: 0 12px 40px rgba(46, 27, 18, 0.18);
+        margin-bottom: 18px;
+        background: $white;
+        animation: float 4s ease-in-out infinite;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        @include respond-to('tablet-sm') {
+          width: 104px;
+          height: 104px;
+          margin-bottom: 14px;
+        }
+
+        @include respond-height(520px) {
+          width: 72px;
+          height: 72px;
+          margin-bottom: 10px;
+          animation: none;
+        }
+      }
+
+      .welcome-title {
+        font-family: $font-display;
+        font-size: 58px;
+        letter-spacing: 4px;
+        margin: 0;
+        color: $dark-color;
+        line-height: 1;
+        font-weight: 700;
+
+        @include respond-to('laptop') {
+          font-size: 48px;
+        }
+
+        @include respond-to('tablet-sm') {
+          font-size: 40px;
+          letter-spacing: 3px;
+        }
+
+        @include respond-to('mobile') {
+          font-size: 34px;
+          letter-spacing: 2px;
+        }
+
+        @include respond-to('mobile-xs') {
+          font-size: 28px;
+        }
+
+        @include respond-height(520px) {
+          font-size: 32px;
+        }
+      }
+
+      .welcome-subtitle {
+        font-size: 13px;
+        letter-spacing: 8px;
+        color: $secondary-color;
+        margin: 10px 0 32px;
+        font-weight: 500;
+
+        @include respond-to('tablet-sm') {
+          font-size: 11px;
+          letter-spacing: 6px;
+          margin-bottom: 22px;
+        }
+
+        @include respond-to('mobile') {
+          letter-spacing: 4px;
+        }
+
+        @include respond-height(520px) {
+          margin-bottom: 14px;
+        }
+      }
+
+      .welcome-card {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: $white;
+        border-radius: 28px;
+        padding: 20px 26px;
+        box-shadow: $shadow-lg;
+        max-width: 520px;
+        text-align: left;
+
+        .welcome-avatar {
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          overflow: hidden;
+          background: $cream-dark;
+          @include flex-center;
+          flex-shrink: 0;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+          }
+
+          @include respond-to('tablet-sm') {
+            width: 48px;
+            height: 48px;
+          }
+        }
+
+        .welcome-msg {
+          h2 {
+            font-family: $font-display;
+            font-size: 20px;
+            margin: 0 0 4px;
+            color: $dark-color;
+
+            @include respond-to('mobile') {
+              font-size: 18px;
+            }
+          }
+
+          p {
+            font-size: 14px;
+            margin: 0;
+            color: $secondary-light;
+            line-height: 1.45;
+
+            @include respond-to('mobile') {
+              font-size: 13.5px;
+            }
+          }
+        }
+
+        @include respond-to('tablet-sm') {
+          padding: 16px 20px;
+          max-width: 100%;
+        }
+
+        @include respond-to('mobile-xs') {
+          flex-direction: column;
+          text-align: center;
+          gap: 12px;
+        }
+      }
+    }
+
+    .welcome-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      width: 100%;
+      max-width: 900px;
+
+      .welcome-card-item {
+        text-align: left;
+        padding: 22px 20px;
+        border-radius: 22px;
+        transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        color: $dark-color;
+        border: 1px solid transparent;
+
+        &:hover {
+          transform: translateY(-4px) scale(1.02);
+          box-shadow: $shadow-lg;
+        }
+
+        h3 {
+          font-family: $font-display;
+          font-size: 16px;
+          margin: 0 0 6px;
+          color: $dark-color;
+        }
+
+        p {
+          font-size: 13px;
+          margin: 0;
+          color: $secondary-light;
+          line-height: 1.45;
+        }
+
+        &.card-cream { background: $card-cream-bg; }
+        &.card-green { background: $card-green-bg; }
+        &.card-pink  { background: $card-pink-bg; }
+      }
+
+      @include respond-to('laptop') {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      @include respond-to('tablet-sm') {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+
+    @include respond-to('tablet') {
+      padding: 20px 20px 40px;
+    }
+
+    @include respond-to('tablet-sm') {
+      padding: 16px 16px 32px;
+      gap: 28px;
+    }
+
+    @include respond-height(520px) {
+      gap: 20px;
+      padding-top: 10px;
+    }
+  }
+
+  // ===== VISTA DEL CHAT =====
+  .chat-view {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+
+    &.hidden {
+      display: none;
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 28px;
+      background: $white;
+      border-bottom: 1px solid $cream-dark;
+      flex-shrink: 0;
+
+      .bot-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        overflow: hidden;
+        flex-shrink: 0;
+        background: $cream-dark;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+      }
+
+      .bot-info {
+        h2 {
+          font-family: $font-display;
+          font-size: 17px;
+          margin: 0;
+        }
+
+        .status {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin: 2px 0 0;
+          font-size: 12px;
+          color: $text-muted;
+
+          .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: $success-color;
+            display: inline-block;
+            animation: pulse 2s infinite;
+          }
+        }
+      }
+
+      @include respond-to('tablet-sm') {
+        padding: 12px 16px;
+      }
+
+      @include respond-height(520px) {
+        padding: 8px 16px;
+      }
+    }
+
+    // LISTA DE MENSAJES
+    .messages,
+    .message-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      scroll-behavior: smooth;
+
+      .message-row {
+        display: flex;
+        gap: 10px;
+        max-width: 78%;
+        animation: fadeSlide 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        .message-avatar {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background: $secondary-color;
+          color: $cream;
+          @include flex-center;
+          flex-shrink: 0;
+          overflow: hidden;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+          }
+
+          svg {
+            color: $cream;
+          }
+
+          @include respond-to('mobile') {
+            width: 26px;
+            height: 26px;
+          }
+        }
+
+        .bubble,
+        .message-bubble {
+          padding: 12px 16px;
+          border-radius: $radius-md;
+          font-size: 14.5px;
+          line-height: 1.5;
+          box-shadow: $shadow;
+          word-wrap: break-word;
+
+          @include respond-to('mobile') {
+            padding: 10px 14px;
+            font-size: 14px;
+          }
+        }
+
+        // Asistente / Bot
+        &.bot,
+        &.assistant {
+          align-self: flex-start;
+
+          .bubble,
+          .message-bubble {
+            background: $bot-bubble;
+            border-bottom-left-radius: 4px;
+            color: $text-dark;
+          }
+
+          .chat-package-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+
+            .chat-package-btn {
+              padding: 10px 14px;
+              background: $cream;
+              border: 1.5px solid $cream-dark;
+              border-radius: $radius-md;
+              font-size: 13px;
+              color: $secondary-color;
+              font-weight: 600;
+              transition: all 0.2s ease;
+              text-align: left;
+              display: flex;
+              flex-direction: column;
+              gap: 2px;
+              align-items: flex-start;
+
+              .chat-package-header {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+
+                svg {
+                  flex-shrink: 0;
+                  color: $secondary-color;
+                  transition: color 0.2s ease;
+                }
+              }
+
+              small {
+                font-size: 11px;
+                font-weight: 400;
+                color: $text-muted;
+                transition: color 0.2s ease;
+              }
+
+              &:hover {
+                background: $primary-color;
+                border-color: $primary-color;
+                color: $white;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(217, 121, 61, 0.35);
+
+                .chat-package-header svg { color: $white; }
+                small { color: rgba(255, 255, 255, 0.85); }
+              }
+            }
+
+            @include respond-to('mobile') {
+              flex-direction: column;
+
+              .chat-package-btn {
+                width: 100%;
+              }
+            }
+          }
+        }
+
+        // Usuario
+        &.user {
+          align-self: flex-end;
+          flex-direction: row-reverse;
+
+          .bubble,
+          .message-bubble {
+            background: $user-bubble;
+            color: $white;
+            border-bottom-right-radius: 4px;
+          }
+        }
+
+        // Indicador de escritura
+        &.typing-indicator {
+          .bubble,
+          .message-bubble {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: $text-muted;
+            font-size: 13px;
+
+            .typing-dots {
+              display: flex;
+              gap: 3px;
+
+              span {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: $secondary-light;
+                animation: bounce 1.2s infinite ease-in-out;
+
+                &:nth-child(2) { animation-delay: 0.15s; }
+                &:nth-child(3) { animation-delay: 0.3s; }
+              }
+            }
+          }
+        }
+
+        @include respond-to('laptop') {
+          max-width: 85%;
+        }
+
+        @include respond-to('tablet-sm') {
+          max-width: 94%;
+        }
+
+        @include respond-to('mobile') {
+          gap: 8px;
+        }
+
+        @include respond-from('desktop-lg') {
+          max-width: 70%;
+        }
+      }
+
+      @include respond-to('tablet') {
+        padding: 20px;
+      }
+
+      @include respond-to('tablet-sm') {
+        padding: 18px 16px;
+        gap: 14px;
+      }
+
+      @include respond-height(520px) {
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+
+      @include respond-from('desktop-lg') {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    // BOTONES DE ACCIÓN RÁPIDA (QUICK REPLIES)
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      padding: 0 28px 14px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+
+      .quick-btn {
+        padding: 9px 16px;
+        background: $white;
+        border: 1px solid $cream-dark;
+        border-radius: $radius-full;
+        font-size: 13px;
+        color: $secondary-color;
+        font-weight: 500;
+        transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+        &:hover {
+          background: $primary-color;
+          color: $white;
+          border-color: $primary-color;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 14px rgba(217, 121, 61, 0.3);
+        }
+
+        &:active {
+          transform: scale(0.96);
+        }
+
+        @include respond-to('mobile-xs') {
+          padding: 8px 12px;
+          font-size: 12.5px;
+        }
+      }
+
+      @include respond-to('tablet') {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      @include respond-to('tablet-sm') {
+        padding: 0 16px 12px;
+        gap: 8px;
+      }
+
+      @include respond-from('desktop-lg') {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+
+    // FORMULARIO DE ENVÍO (COMPOSER)
+    .composer {
+      display: flex;
+      gap: 10px;
+      padding: 16px 28px 22px;
+      flex-shrink: 0;
+
+      .composer-input {
+        flex: 1;
+        padding: 13px 18px;
+        border: 1px solid $cream-dark;
+        border-radius: $radius-full;
+        font-size: 14.5px;
+        background: $white;
+        outline: none;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+        &:focus {
+          border-color: $primary-color;
+          box-shadow: 0 0 0 3px rgba(217, 121, 61, 0.15);
+        }
+
+        @include respond-to('tablet-sm') {
+          font-size: 16px; // Evita el zoom automático en iOS
+        }
+      }
+
+      .send-btn {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: $primary-color;
+        color: $white;
+        flex-shrink: 0;
+        @include flex-center;
+        transition: background 0.15s ease, transform 0.1s ease;
+        position: relative;
+
+        svg {
+          color: $white;
+          transform: translateX(1px);
+        }
+
+        &:hover {
+          background: $secondary-color;
+          transform: scale(1.05);
+        }
+
+        &:active {
+          transform: scale(0.92);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+
+        .spinner {
+          width: 18px;
+          height: 18px;
+          border: 2px solid rgba(255, 255, 255, 0.4);
+          border-top-color: #fff;
+          border-radius: 50%;
+          animation: spin 0.7s linear infinite;
+        }
+
+        @include respond-to('mobile-xs') {
+          width: 42px;
+          height: 42px;
+        }
+      }
+
+      @include respond-to('tablet') {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      @include respond-to('tablet-sm') {
+        padding: 12px 16px calc(18px + env(safe-area-inset-bottom, 0px));
+      }
+
+      @include respond-height(520px) {
+        padding-top: 8px;
+        padding-bottom: 10px;
+      }
+
+      @include respond-from('desktop-lg') {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+  }
+}
+
