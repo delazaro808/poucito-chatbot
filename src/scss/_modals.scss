@@ -5,6 +5,12 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
+// Seguro: un overlay sin la clase .visible nunca debe mostrarse,
+// sin importar qué otra hoja de estilos se cargue.
+.modal-overlay:not(.visible) {
+  display: none !important;
+}
+
 .modal-overlay {
   display: none;
   position: fixed;
@@ -385,4 +391,3 @@
     }
   }
 }
-

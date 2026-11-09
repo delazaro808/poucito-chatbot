@@ -21,7 +21,6 @@ from typing import Any
 
 import requests
 from firebase_functions import https_fn
-from firebase_functions.https import Request
 
 # ──────────────────────────────────────────────────────────────
 # CONFIGURACIÓN
@@ -210,12 +209,14 @@ def _make_response(
 
 @https_fn.on_request(
     region="us-central1",
+    secrets=["GROQ_API_KEY"],   # inyecta el secreto de Secret Manager en producción
+    invoker="public",           # permite llamadas sin autenticación (el navegador no envía credenciales)
     memory=256,
     timeout_sec=60,
     min_instances=0,
     max_instances=10,
 )
-def chat_pousito(req: Request) -> https_fn.Response:
+def chat_pousito(req: https_fn.Request) -> https_fn.Response:
     """
     Endpoint HTTP para el chatbot Pousito.
 
@@ -354,4 +355,3 @@ def chat_pousito(req: Request) -> https_fn.Response:
         200,
         origin,
     )
-

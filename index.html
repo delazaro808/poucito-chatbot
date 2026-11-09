@@ -7,8 +7,7 @@
   <!-- Ruta del icono (usando tu imagen jpg) -->
   <link rel="icon" type="image/png" href="/src/assets/poucito.png">
   
-  <!-- Vite importará el CSS desde main.ts, pero lo dejamos aquí por seguridad -->
-  <link rel="stylesheet" href="/src/css/styles.css">
+  <!-- Los estilos los inyecta Vite desde main.ts (import './scss/styles.scss') -->
   
   <script>
     (function() {
@@ -457,7 +456,7 @@
     </div>
   </div>
      <!-- ============ MODAL DE LOGIN ============ -->
-  <div class="modal-overlay visible" id="authModal" style="z-index: 9999;">
+  <div class="modal-overlay" id="authModal" style="z-index: 9999;">
     <div class="modal modal-auth">
 
        <button class="modal-close" id="closeAuthBtn" aria-label="Cerrar">

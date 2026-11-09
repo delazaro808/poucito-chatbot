@@ -1236,10 +1236,12 @@ export async function initChat(): Promise<void> {
 
 onAuthStateChanged(auth, async (user: User | null) => {
   const authModal = document.getElementById('authModal') as HTMLDivElement | null;
+  const registerModal = document.getElementById('registerModal') as HTMLDivElement | null;
 
   if (user) {
     resetSession();
     authModal?.classList.remove('visible');
+    registerModal?.classList.remove('visible');
     sessionStorage.removeItem('pousito_invitado');
     await ensureUserProfile(user);
 
@@ -1250,9 +1252,11 @@ onAuthStateChanged(auth, async (user: User | null) => {
   } else {
     if (!sessionStorage.getItem('pousito_invitado')) {
       resetSession();
+      registerModal?.classList.remove('visible');
       authModal?.classList.add('visible');
     } else {
       authModal?.classList.remove('visible');
+      registerModal?.classList.remove('visible');
     }
   }
 });
@@ -1276,8 +1280,12 @@ window.addEventListener('modoInvitado', () => {
 userBtn?.addEventListener('click', () => {
   if (auth.currentUser) {
     if (profileEmail) profileEmail.textContent = auth.currentUser.email || '';
+    document.getElementById('authModal')?.classList.remove('visible');
+    document.getElementById('registerModal')?.classList.remove('visible');
     profileModal?.classList.add('visible');
   } else {
+    profileModal?.classList.remove('visible');
+    document.getElementById('registerModal')?.classList.remove('visible');
     document.getElementById('authModal')?.classList.add('visible');
   }
 });
@@ -1292,9 +1300,9 @@ btnLogout?.addEventListener('click', async () => {
     sessionStorage.clear();
     await auth.signOut();
     resetSession();
+    document.getElementById('registerModal')?.classList.remove('visible');
     document.getElementById('authModal')?.classList.add('visible');
   } catch (error: unknown) {
     console.error("Error al cerrar sesión", error);
   }
 });
-
